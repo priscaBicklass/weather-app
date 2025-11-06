@@ -34,3 +34,16 @@ button{background:var(--accent);color:white;border:none;padding:10px 14px;border
   padding: 10px;
   text-align: center;
 }
+.history {
+  margin-top: 12px;
+}
+
+.history button {
+  margin-right: 8px;
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: #e5e7eb;
+  color: #111;
+  border-radius: 6px;
+  cursor: pointer;
+}
