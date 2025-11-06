@@ -23,6 +23,24 @@
       <div class="grid" v-if="weather">
         <WeatherCard :data="weather" />
       </div>
+      <div v-if="forecast.length > 0" class="forecast-section">
+        <h3>5-Day Forecast</h3>
+        <div class="forecast-grid">
+          <div v-for="day in forecast" :key="day.dt" class="forecast-card">
+            <p>
+              {{
+                day.dt
+                  ? new Date(day.dt * 1000).toLocaleDateString(undefined, {
+                      weekday: "short",
+                    })
+                  : "N/A"
+              }}
+            </p>
+            <p>{{ Math.round(day.main.temp) }}°C</p>
+            <p>{{ day.weather[0].main }}</p>
+          </div>
+        </div>
+      </div>
 
       <div v-if="!weather && !loading" class="muted" style="margin-top: 12px">
         Try searching for a city — e.g. "Lilongwe", "Tokyo", or "London".
@@ -33,41 +51,54 @@
 
 <script lang="ts">
 import { ref } from "vue";
-import WeatherCard from "./components/WeatherCard.vue";
-
 interface WeatherAPIResponse {
-  name: string;
+  name?: string;
   main: { temp: number; humidity: number };
   weather: { main: string; description: string; icon: string }[];
   wind: { speed: number };
+  dt?: number;
 }
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
 export default {
-  components: { WeatherCard },
   setup() {
     const query = ref("");
     const weather = ref<WeatherAPIResponse | null>(null);
+    const forecast = ref<WeatherAPIResponse[]>([]);
     const loading = ref(false);
     const error = ref<string | null>(null);
 
     async function search() {
-      if (!query.value) return;
+      if (!query.value.trim()) return;
       loading.value = true;
       error.value = null;
       weather.value = null;
+      forecast.value = [];
+
       try {
-        const q = encodeURIComponent(query.value.trim());
-        const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${q}&units=metric&appid=${API_KEY}`
+        // ✅ Current weather
+        const currentRes = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
+            query.value
+          )}&units=metric&appid=${API_KEY}`
         );
-        if (!res.ok) {
-          const body = await res.json().catch(() => ({}));
-          throw new Error(body.message || "Failed to fetch");
-        }
-        const data = (await res.json()) as WeatherAPIResponse;
-        weather.value = data;
+        if (!currentRes.ok) throw new Error("City not found");
+        weather.value = await currentRes.json();
+
+        // ✅ 5-day forecast (every 3 hours)
+        const forecastRes = await fetch(
+          `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(
+            query.value
+          )}&units=metric&appid=${API_KEY}`
+        );
+        if (!forecastRes.ok) throw new Error("Unable to fetch forecast");
+        const data = await forecastRes.json();
+
+        // ✅ Pick one data point per day (every 8th item)
+        forecast.value = data.list.filter(
+          (_: any, index: number) => index % 8 === 0
+        );
       } catch (err: any) {
         error.value = err.message || String(err);
       } finally {
@@ -75,7 +106,7 @@ export default {
       }
     }
 
-    return { query, weather, loading, error, search };
+    return { query, weather, forecast, loading, error, search };
   },
 };
 </script>

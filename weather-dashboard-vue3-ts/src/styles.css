@@ -18,3 +18,19 @@ button{background:var(--accent);color:white;border:none;padding:10px 14px;border
 .weather-card{padding:14px;border-radius:10px;background:linear-gradient(180deg,rgba(37,99,235,0.05),transparent)}
 .big{font-size:28px;font-weight:700}
 .small{font-size:14px}
+.forecast-section {
+  margin-top: 20px;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.forecast-card {
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
