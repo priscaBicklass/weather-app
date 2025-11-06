@@ -1,0 +1,20 @@
+/* Simple, clean styles for the Weather Dashboard */
+:root{
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #2563eb;
+}
+*{box-sizing:border-box}
+html,body,#app{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial}
+body{background:linear-gradient(180deg,var(--bg),#eef2ff);display:flex;align-items:center;justify-content:center;padding:32px}
+.container{width:100%;max-width:820px}
+.card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 6px 18px rgba(16,24,40,0.08);}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+input[type="text"]{padding:10px 12px;border:1px solid #e5e7eb;border-radius:8px;width:260px}
+button{background:var(--accent);color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
+.muted{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+.weather-card{padding:14px;border-radius:10px;background:linear-gradient(180deg,rgba(37,99,235,0.05),transparent)}
+.big{font-size:28px;font-weight:700}
+.small{font-size:14px}
