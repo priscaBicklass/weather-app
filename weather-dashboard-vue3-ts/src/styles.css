@@ -1,4 +1,4 @@
-/* Simple, clean styles for the Weather Dashboard */
+/* Simple, clean styles for the Weather Dashboard 
 :root{
   --bg: #f3f4f6;
   --card: #ffffff;
@@ -46,4 +46,55 @@ button{background:var(--accent);color:white;border:none;padding:10px 14px;border
   color: #111;
   border-radius: 6px;
   cursor: pointer;
+}
+
+/* Container */
+/*.app {
+  background-color: #121212;
+  color: #f0f0f0;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: "Inter", sans-serif;
+  max-width: 1200px;  /* centers content on large screens */
+ /* margin: 0 auto;
+}
+
+/* Current weather layout */
+/*.weather-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;       /* more spacing for desktop */
+ /* flex-wrap: wrap;  /* allows wrapping on smaller screens */
+/*}
+
+/* Forecast grid */
+/*.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* larger min-width for desktop */
+  /*gap: 1rem;
+} */
+
+/* style.css - Keep this minimal */
+:root {
+  --bg: #121212;
+  --card: #1c1c1c;
+  --muted: #6b7280;
+  --accent: #4fc3f7;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #app {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: #f0f0f0;
 }
